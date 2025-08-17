@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.box {
+    background-color: #b0b0b0;
+    border: 1px solid black;
+    width: 30%;
+    padding: 40px 20px 20px;
+    position: relative;
+    text-align: left;
+}
+
+/* Title styles */
+.title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 15px;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.chicken {
+    background-color: #f7b7a3;
+}
+
+.beef {
+    background-color: #e17b74;
+    color: white;
+}
+
+.sushi {
+    background-color: #f2de91;
+}
+
+/* Tablet view: 768px to 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+    .box {
+        width: 48%; /* Two columns for first two boxes */
+    }
+    .box:nth-child(3) {
+        width: 100%; /* Third box takes full row */
+    }
+}
+
+/* Mobile view: ≤767px */
+@media (max-width: 767px) {
+    .box {
+        width: 90%; /* One box per row */
+    }
+}
