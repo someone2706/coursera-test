@@ -1,0 +1,23 @@
+<div class="home">
+  <h2>Welcome to My Restaurant</h2>
+  <div class="tiles">
+    <div class="tile" id="menu-tile" onclick="$dc.loadMenuCategories();">
+      <h3>Menu</h3>
+      <p>View all categories</p>
+    </div>
+
+    <div class="tile" id="specials-tile">
+      <!-- Note: the placeholder below will be replaced by script.js.
+           The placeholder must result in something like onclick="$dc.loadMenuItems('L');" -->
+      <a href="#" onclick="$dc.loadMenuItems({{randomCategoryShortName}});">
+        <h3>Specials</h3>
+        <p>Click for a random category</p>
+      </a>
+    </div>
+
+    <div class="tile" id="map-tile">
+      <h3>Map</h3>
+      <p>Find us here</p>
+    </div>
+  </div>
+</div>
