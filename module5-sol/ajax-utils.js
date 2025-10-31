@@ -1,35 +1,67 @@
-// Simple AJAX utility used by the starter files
 (function (global) {
-  var ajaxUtils = {};
 
-  // Returns an HTTP request object
-  function getRequestObject() {
-    if (window.XMLHttpRequest) {
-      return new XMLHttpRequest();
-    } else {
-      // IE fallback
-      return new ActiveXObject("Microsoft.XMLHTTP");
-    }
+// Set up a namespace for our utility
+var ajaxUtils = {};
+
+
+// Returns an HTTP request object
+function getRequestObject() {
+  if (window.XMLHttpRequest) {
+    return (new XMLHttpRequest());
+  } 
+  else if (window.ActiveXObject) {
+    // For very old IE browsers (optional)
+    return (new ActiveXObject("Microsoft.XMLHTTP"));
+  } 
+  else {
+    global.alert("Ajax is not supported!");
+    return(null); 
   }
+}
 
-  // Makes an AJAX GET request to 'requestUrl'
-  // If 'responseJson' is true the responseText will be parsed as JSON
-  ajaxUtils.sendGetRequest = function (requestUrl, responseHandler, responseJson) {
+
+// Makes an Ajax GET request to 'requestUrl'
+ajaxUtils.sendGetRequest = 
+  function(requestUrl, responseHandler, isJsonResponse) {
     var request = getRequestObject();
-    request.onreadystatechange = function () {
-      if (request.readyState === 4 && request.status === 200) {
-        if (responseJson === true) {
-          responseHandler(JSON.parse(request.responseText));
-        } else {
-          responseHandler(request.responseText);
-        }
-      } else if (request.readyState === 4) {
-        console.error("AJAX error: status " + request.status);
-      }
-    };
+    request.onreadystatechange = 
+      function() { 
+        handleResponse(request, 
+                       responseHandler,
+                       isJsonResponse); 
+      };
     request.open("GET", requestUrl, true);
-    request.send(null);
+    request.send(null); // for POST only
   };
 
-  global.$ajaxUtils = ajaxUtils;
+
+// Only calls user provided 'responseHandler'
+// function if response is ready
+// and not an error
+function handleResponse(request,
+                        responseHandler,
+                        isJsonResponse) {
+  if ((request.readyState == 4) &&
+     (request.status == 200)) {
+
+    // Default to isJsonResponse = true
+    if (isJsonResponse == undefined) {
+      isJsonResponse = true;
+    }
+
+    if (isJsonResponse) {
+      responseHandler(JSON.parse(request.responseText));
+    }
+    else {
+      responseHandler(request.responseText);
+    }
+  }
+}
+
+
+// Expose utility to the global object
+global.$ajaxUtils = ajaxUtils;
+
+
 })(window);
+
